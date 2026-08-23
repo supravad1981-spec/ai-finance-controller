@@ -12,7 +12,7 @@
     "date": "2026-08-01",
     "reference": "PAY002",
     "description": "Client payment",
-    "amount": 18500,
+    "amount": 17500
     "type": "credit"
   },
   {

@@ -1,7 +1,7 @@
 async function loadFinanceData() {
     try {
-        const transactionResponse = await fetch("data/transactions.json");
-        const bankResponse = await fetch("data/bank_records.json");
+        const transactionResponse = await fetch("data/transactions.json?v=2");
+        const bankResponse = await fetch("data/bank_records.json?v=2");
 
         const transactions = await transactionResponse.json();
         const bankRecords = await bankResponse.json();

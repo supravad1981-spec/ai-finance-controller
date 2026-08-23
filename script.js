@@ -1,13 +1,19 @@
-let income = 0;
-let expenses = 0;
+let income = Number(localStorage.getItem("income")) || 0;
+let expenses = Number(localStorage.getItem("expenses")) || 0;
 
 function addIncome(amount) {
     income += amount;
+
+    localStorage.setItem("income", income);
+
     updateDashboard();
 }
 
 function addExpense(amount) {
     expenses += amount;
+
+    localStorage.setItem("expenses", expenses);
+
     updateDashboard();
 }
 
@@ -44,3 +50,5 @@ function updateDashboard() {
     document.getElementById("expenses").textContent = `₹${expenses}`;
     document.getElementById("balance").textContent = `₹${balance}`;
 }
+
+updateDashboard();

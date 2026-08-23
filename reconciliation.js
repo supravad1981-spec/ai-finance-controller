@@ -96,10 +96,17 @@ function getReconciliationSummary(results) {
         ? 0
         : ((matched / total) * 100).toFixed(2);
 
-    return {
+       return {
         total,
         matched,
         exceptions,
         matchRate
     };
 }
+
+loadFinanceData().then(results => {
+    const summary = getReconciliationSummary(results);
+
+    console.log("Reconciliation Results:", results);
+    console.log("Reconciliation Summary:", summary);
+});

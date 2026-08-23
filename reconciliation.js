@@ -209,8 +209,15 @@ function reconcileTransactions(transactions, bankRecords) {
             results.push({
                 transaction_id: transaction.transaction_id,
                 reference: transaction.reference,
-                status: "exception",
-                reason: "No matching bank record found"
+                results.push({
+    transaction_id: transaction.transaction_id,
+    reference: transaction.reference,
+    status: "exception",
+    reason: reason.join(", "),
+    transactionAmount: transaction.amount,
+    bankAmount: bankRecord.amount,
+    difference: Math.abs(transaction.amount - bankRecord.amount)
+});
             });
             return;
         }
@@ -292,8 +299,11 @@ if (exceptions.length === 0) {
 } else {
     exceptionsList.innerHTML = exceptions.map(item => `
         <div class="exception-item">
-            <strong>${item.reference}</strong>
-            <p>${item.reason}</p>
+           <strong>${item.reference}</strong>
+<p>${item.reason}</p>
+<p>Transaction amount: ₹${item.transactionAmount}</p>
+<p>Bank amount: ₹${item.bankAmount}</p>
+<p>Difference: ₹${item.difference}</p>
         </div>
     `).join("");
 }

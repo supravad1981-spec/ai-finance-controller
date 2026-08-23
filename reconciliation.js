@@ -205,22 +205,17 @@ function reconcileTransactions(transactions, bankRecords) {
             bank => bank.reference === transaction.reference
         );
 
-        if (matches.length === 0) {
-            results.push({
-                transaction_id: transaction.transaction_id,
-                reference: transaction.reference,
-                results.push({
-    transaction_id: transaction.transaction_id,
-    reference: transaction.reference,
-    status: "exception",
-    reason: reason.join(", "),
-    transactionAmount: transaction.amount,
-    bankAmount: bankRecord.amount,
-    difference: Math.abs(transaction.amount - bankRecord.amount)
-});
-            });
-            return;
-        }
+       if (matches.length === 0) {
+
+    results.push({
+        transaction_id: transaction.transaction_id,
+        reference: transaction.reference,
+        status: "exception",
+        reason: "No matching bank record found"
+    });
+
+    return;
+}
 
         const bankRecord = matches[0];
         const reasons = [];

@@ -281,5 +281,22 @@ document.getElementById("matchedTransactions").textContent = summary.matched;
 document.getElementById("exceptionTransactions").textContent = summary.exceptions;
 document.getElementById("matchRate").textContent = summary.matchRate + "%";
 
+const exceptionsList = document.getElementById("exceptionsList");
+
+const exceptions = results.filter(
+    item => item.status === "exception"
+);
+
+if (exceptions.length === 0) {
+    exceptionsList.innerHTML = "<p>No reconciliation exceptions found.</p>";
+} else {
+    exceptionsList.innerHTML = exceptions.map(item => `
+        <div class="exception-item">
+            <strong>${item.reference}</strong>
+            <p>${item.reason}</p>
+        </div>
+    `).join("");
+}
+
 console.log("Reconciliation Results:", results);
 console.log("Reconciliation Summary:", summary);

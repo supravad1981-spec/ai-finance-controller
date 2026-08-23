@@ -244,7 +244,7 @@ function reconcileTransactions(transactions, bankRecords) {
     transaction_id: transaction.transaction_id,
     reference: transaction.reference,
     status: "exception",
-    reason: reason.join(", "),
+    reason: reasons.join(", "),
     transactionAmount: transaction.amount,
     bankAmount: bankRecord.amount,
     difference: Math.abs(transaction.amount - bankRecord.amount)

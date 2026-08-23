@@ -241,11 +241,14 @@ function reconcileTransactions(transactions, bankRecords) {
             });
         } else {
             results.push({
-                transaction_id: transaction.transaction_id,
-                reference: transaction.reference,
-                status: "exception",
-                reason: reasons.join(", ")
-            });
+    transaction_id: transaction.transaction_id,
+    reference: transaction.reference,
+    status: "exception",
+    reason: reason.join(", "),
+    transactionAmount: transaction.amount,
+    bankAmount: bankRecord.amount,
+    difference: Math.abs(transaction.amount - bankRecord.amount)
+});
         }
     });
 

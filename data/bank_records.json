@@ -8,13 +8,13 @@
     "type": "debit"
   },
   {
-    "bank_id": "BANK002",
-    "date": "2026-08-01",
-    "reference": "PAY002",
-    "description": "Client payment",
-    "amount": 17500
-    "type": "credit"
-  },
+  "bank_id": "BANK002",
+  "date": "2026-08-01",
+  "reference": "PAY002",
+  "description": "Client payment",
+  "amount": 17500,
+  "type": "credit"
+},
   {
     "bank_id": "BANK003",
     "date": "2026-08-02",

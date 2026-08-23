@@ -276,5 +276,10 @@ function getReconciliationSummary(results) {
 const results = reconcileTransactions(transactions, bankRecords);
 const summary = getReconciliationSummary(results);
 
+document.getElementById("totalTransactions").textContent = summary.total;
+document.getElementById("matchedTransactions").textContent = summary.matched;
+document.getElementById("exceptionTransactions").textContent = summary.exceptions;
+document.getElementById("matchRate").textContent = summary.matchRate + "%";
+
 console.log("Reconciliation Results:", results);
 console.log("Reconciliation Summary:", summary);

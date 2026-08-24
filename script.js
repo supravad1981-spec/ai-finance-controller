@@ -6,6 +6,10 @@ let userTransactions = JSON.parse(
 ) || [];
 
 
+/* =========================
+   ADD INCOME
+========================= */
+
 function addIncome(amount) {
     income += amount;
 
@@ -24,8 +28,14 @@ function addIncome(amount) {
 
     updateDashboard();
     displayTransactions();
+    updateSpendingAnalysis();
+    updateAIInsights();
 }
 
+
+/* =========================
+   ADD EXPENSE
+========================= */
 
 function addExpense(amount) {
     expenses += amount;
@@ -45,8 +55,14 @@ function addExpense(amount) {
 
     updateDashboard();
     displayTransactions();
+    updateSpendingAnalysis();
+    updateAIInsights();
 }
 
+
+/* =========================
+   HANDLE INCOME
+========================= */
 
 function handleIncome() {
     const input = document.getElementById("amountInput");
@@ -63,6 +79,10 @@ function handleIncome() {
 }
 
 
+/* =========================
+   HANDLE EXPENSE
+========================= */
+
 function handleExpense() {
     const input = document.getElementById("amountInput");
     const amount = Number(input.value);
@@ -78,17 +98,36 @@ function handleExpense() {
 }
 
 
+/* =========================
+   UPDATE DASHBOARD
+========================= */
+
 function updateDashboard() {
     const balance = income - expenses;
 
-    document.getElementById("income").textContent = `₹${income}`;
-    document.getElementById("expenses").textContent = `₹${expenses}`;
-    document.getElementById("balance").textContent = `₹${balance}`;
+    const incomeElement = document.getElementById("income");
+    const expensesElement = document.getElementById("expenses");
+    const balanceElement = document.getElementById("balance");
+
+    if (incomeElement) {
+        incomeElement.textContent = `₹${income}`;
+    }
+
+    if (expensesElement) {
+        expensesElement.textContent = `₹${expenses}`;
+    }
+
+    if (balanceElement) {
+        balanceElement.textContent = `₹${balance}`;
+    }
 }
 
 
-function displayTransactions() {
+/* =========================
+   TRANSACTION HISTORY
+========================= */
 
+function displayTransactions() {
     const history = document.getElementById("transactionHistory");
 
     if (!history) {
@@ -106,13 +145,17 @@ function displayTransactions() {
         .map(transaction => `
             <div class="transaction-item">
                 <strong>${transaction.type}</strong>
-                <span>₹${transaction.amount}</span>
-                <small>${transaction.date}</small>
+                <span> ₹${Number(transaction.amount)}</span>
+                <small> ${transaction.date}</small>
             </div>
         `)
         .join("");
 }
 
+
+/* =========================
+   SPENDING ANALYSIS
+========================= */
 
 function updateSpendingAnalysis() {
     const analysis = document.getElementById("spendingAnalysis");
@@ -121,50 +164,43 @@ function updateSpendingAnalysis() {
         return;
     }
 
-    if (userTransactions.length === 0) {
-        analysis.innerHTML = "<p>Add some transactions to see your spending analysis.</p>";
+    if (income === 0 && expenses === 0) {
+        analysis.innerHTML =
+            "<p>Add some transactions to see your spending analysis.</p>";
         return;
     }
 
-    const incomeTransactions = userTransactions.filter(
-        transaction => transaction.type === "Income"
-    );
-
-    const expenseTransactions = userTransactions.filter(
-        transaction => transaction.type === "Expense"
-    );
-
-    const totalIncome = incomeTransactions.reduce(
-        (sum, transaction) => sum + Number(transaction.amount),
-        0
-    );
-
-    const totalExpenses = expenseTransactions.reduce(
-        (sum, transaction) => sum + Number(transaction.amount),
-        0
-    );
-
-    const balance = totalIncome - totalExpenses;
+    const balance = income - expenses;
 
     let message = "";
 
-    if (totalExpenses === 0) {
-        message = "You have no recorded expenses yet. Start adding expenses to understand your spending.";
-    } else if (totalExpenses > totalIncome) {
-        message = "Your expenses are higher than your income. Consider reducing unnecessary spending.";
-    } else if (totalExpenses >= totalIncome * 0.5) {
-        message = "More than half of your income is being spent. Keep an eye on your expenses.";
+    if (expenses === 0) {
+        message =
+            "You have no recorded expenses yet. Start adding expenses to understand your spending.";
+    } else if (expenses > income) {
+        message =
+            "Your expenses are higher than your income. Consider reducing unnecessary spending.";
+    } else if (expenses >= income * 0.5) {
+        message =
+            "More than half of your income is being spent. Keep an eye on your expenses.";
     } else {
-        message = "Your spending is currently under control. Keep maintaining a healthy balance.";
+        message =
+            "Your spending is currently under control. Keep maintaining a healthy balance.";
     }
 
     analysis.innerHTML = `
-        <p><strong>Total Income:</strong> ₹${totalIncome}</p>
-        <p><strong>Total Expenses:</strong> ₹${totalExpenses}</p>
+        <p><strong>Total Income:</strong> ₹${income}</p>
+        <p><strong>Total Expenses:</strong> ₹${expenses}</p>
         <p><strong>Balance:</strong> ₹${balance}</p>
         <p><strong>Insight:</strong> ${message}</p>
     `;
 }
+
+
+/* =========================
+   AI INSIGHTS
+========================= */
+
 function updateAIInsights() {
     const aiInsights = document.getElementById("aiInsights");
 
@@ -172,47 +208,48 @@ function updateAIInsights() {
         return;
     }
 
-    if (userTransactions.length === 0) {
+    if (income === 0 && expenses === 0) {
         aiInsights.innerHTML =
             "<p>Add some transactions to get personalized financial insights.</p>";
         return;
     }
 
-    const totalIncome = userTransactions
-        .filter(transaction => transaction.type === "Income")
-        .reduce((sum, transaction) => sum + Number(transaction.amount), 0);
+    const balance = income - expenses;
 
-    const totalExpenses = userTransactions
-        .filter(transaction => transaction.type === "Expense")
-        .reduce((sum, transaction) => sum + Number(transaction.amount), 0);
+    const spendingPercentage =
+        income > 0
+            ? ((expenses / income) * 100).toFixed(1)
+            : 0;
 
-    const balance = totalIncome - totalExpenses;
+    let insight = "";
 
-const spendingPercentage =
-    totalIncome > 0
-        ? ((totalExpenses / totalIncome) * 100).toFixed(1)
-        : 0;
-
-let insight = "";
-
-    if (totalIncome === 0) {
-        insight = "Add some income to get better financial insights.";
-    } else if (totalExpenses > totalIncome) {
-        insight = "Your expenses are higher than your income. Try reducing unnecessary spending.";
-    } else if (totalExpenses >= totalIncome * 0.5) {
-        insight = "More than 50% of your income is being spent. Consider keeping some money aside as savings.";
+    if (income === 0) {
+        insight =
+            "Add some income to get better financial insights.";
+    } else if (expenses > income) {
+        insight =
+            "Your expenses are higher than your income. Try reducing unnecessary spending.";
+    } else if (expenses >= income * 0.5) {
+        insight =
+            "More than 50% of your income is being spent. Consider keeping some money aside as savings.";
     } else {
-        insight = "Your spending is under control. Keep maintaining a healthy balance and continue saving.";
+        insight =
+            "Your spending is under control. Keep maintaining a healthy balance and continue saving.";
     }
 
     aiInsights.innerHTML = `
-        <p><strong>Income:</strong> ₹${totalIncome}</p>
-        <p><strong>Expenses:</strong> ₹${totalExpenses}</p>
+        <p><strong>Income:</strong> ₹${income}</p>
+        <p><strong>Expenses:</strong> ₹${expenses}</p>
         <p><strong>Balance:</strong> ₹${balance}</p>
-<p><strong>Spending Percentage:</strong> ${spendingPercentage}%</p>
-<p><strong>AI Suggestion:</strong> ${insight}</p>
+        <p><strong>Spending Percentage:</strong> ${spendingPercentage}%</p>
+        <p><strong>AI Suggestion:</strong> ${insight}</p>
     `;
 }
+
+
+/* =========================
+   INITIAL LOAD
+========================= */
 
 updateDashboard();
 displayTransactions();

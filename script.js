@@ -44,7 +44,7 @@ function addExpense(amount) {
     );
 
     updateDashboard();
-    localStorage.setItem("transactions", ...)
+    displayTransactions();
 }
 
 
@@ -95,12 +95,12 @@ function displayTransactions() {
         return;
     }
 
-    if (transactions.length === 0) {
+    if (userTransactions.length === 0) {
         history.innerHTML = "<p>No transactions added yet.</p>";
         return;
     }
 
-    history.innerHTML = transactions
+    history.innerHTML = userTransactions
         .slice()
         .reverse()
         .map(transaction => `

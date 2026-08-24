@@ -1,21 +1,52 @@
 let income = Number(localStorage.getItem("income")) || 0;
 let expenses = Number(localStorage.getItem("expenses")) || 0;
 
+let transactions = JSON.parse(
+    localStorage.getItem("transactions")
+) || [];
+
+
 function addIncome(amount) {
     income += amount;
 
     localStorage.setItem("income", income);
 
+    transactions.push({
+        type: "Income",
+        amount: amount,
+        date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(
+        "transactions",
+        JSON.stringify(transactions)
+    );
+
     updateDashboard();
+    displayTransactions();
 }
+
 
 function addExpense(amount) {
     expenses += amount;
 
     localStorage.setItem("expenses", expenses);
 
+    transactions.push({
+        type: "Expense",
+        amount: amount,
+        date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(
+        "transactions",
+        JSON.stringify(transactions)
+    );
+
     updateDashboard();
+    displayTransactions();
 }
+
 
 function handleIncome() {
     const input = document.getElementById("amountInput");
@@ -27,8 +58,10 @@ function handleIncome() {
     }
 
     addIncome(amount);
+
     input.value = "";
 }
+
 
 function handleExpense() {
     const input = document.getElementById("amountInput");
@@ -40,8 +73,10 @@ function handleExpense() {
     }
 
     addExpense(amount);
+
     input.value = "";
 }
+
 
 function updateDashboard() {
     const balance = income - expenses;
@@ -51,4 +86,33 @@ function updateDashboard() {
     document.getElementById("balance").textContent = `₹${balance}`;
 }
 
+
+function displayTransactions() {
+
+    const history = document.getElementById("transactionHistory");
+
+    if (!history) {
+        return;
+    }
+
+    if (transactions.length === 0) {
+        history.innerHTML = "<p>No transactions added yet.</p>";
+        return;
+    }
+
+    history.innerHTML = transactions
+        .slice()
+        .reverse()
+        .map(transaction => `
+            <div class="transaction-item">
+                <strong>${transaction.type}</strong>
+                <span>₹${transaction.amount}</span>
+                <small>${transaction.date}</small>
+            </div>
+        `)
+        .join("");
+}
+
+
 updateDashboard();
+displayTransactions();

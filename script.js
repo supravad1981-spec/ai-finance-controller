@@ -188,6 +188,13 @@ function updateAIInsights() {
 
     const balance = totalIncome - totalExpenses;
 
+const spendingPercentage =
+    totalIncome > 0
+        ? ((totalExpenses / totalIncome) * 100).toFixed(1)
+        : 0;
+
+let insight = "";
+
     let insight = "";
 
     if (totalIncome === 0) {
@@ -204,7 +211,8 @@ function updateAIInsights() {
         <p><strong>Income:</strong> ₹${totalIncome}</p>
         <p><strong>Expenses:</strong> ₹${totalExpenses}</p>
         <p><strong>Balance:</strong> ₹${balance}</p>
-        <p><strong>AI Suggestion:</strong> ${insight}</p>
+<p><strong>Spending Percentage:</strong> ${spendingPercentage}%</p>
+<p><strong>AI Suggestion:</strong> ${insight}</p>
     `;
 }
 

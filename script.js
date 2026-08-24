@@ -165,7 +165,50 @@ function updateSpendingAnalysis() {
         <p><strong>Insight:</strong> ${message}</p>
     `;
 }
+function updateAIInsights() {
+    const aiInsights = document.getElementById("aiInsights");
+
+    if (!aiInsights) {
+        return;
+    }
+
+    if (userTransactions.length === 0) {
+        aiInsights.innerHTML =
+            "<p>Add some transactions to get personalized financial insights.</p>";
+        return;
+    }
+
+    const totalIncome = userTransactions
+        .filter(transaction => transaction.type === "Income")
+        .reduce((sum, transaction) => sum + Number(transaction.amount), 0);
+
+    const totalExpenses = userTransactions
+        .filter(transaction => transaction.type === "Expense")
+        .reduce((sum, transaction) => sum + Number(transaction.amount), 0);
+
+    const balance = totalIncome - totalExpenses;
+
+    let insight = "";
+
+    if (totalIncome === 0) {
+        insight = "Add some income to get better financial insights.";
+    } else if (totalExpenses > totalIncome) {
+        insight = "Your expenses are higher than your income. Try reducing unnecessary spending.";
+    } else if (totalExpenses >= totalIncome * 0.5) {
+        insight = "More than 50% of your income is being spent. Consider keeping some money aside as savings.";
+    } else {
+        insight = "Your spending is under control. Keep maintaining a healthy balance and continue saving.";
+    }
+
+    aiInsights.innerHTML = `
+        <p><strong>Income:</strong> ₹${totalIncome}</p>
+        <p><strong>Expenses:</strong> ₹${totalExpenses}</p>
+        <p><strong>Balance:</strong> ₹${balance}</p>
+        <p><strong>AI Suggestion:</strong> ${insight}</p>
+    `;
+}
 
 updateDashboard();
 displayTransactions();
 updateSpendingAnalysis();
+updateAIInsights();

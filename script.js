@@ -195,8 +195,6 @@ const spendingPercentage =
 
 let insight = "";
 
-    let insight = "";
-
     if (totalIncome === 0) {
         insight = "Add some income to get better financial insights.";
     } else if (totalExpenses > totalIncome) {

@@ -1,7 +1,7 @@
 let income = Number(localStorage.getItem("income")) || 0;
 let expenses = Number(localStorage.getItem("expenses")) || 0;
 
-let transactions = JSON.parse(
+let userTransactions = JSON.parse(
     localStorage.getItem("transactions")
 ) || [];
 
@@ -11,7 +11,7 @@ function addIncome(amount) {
 
     localStorage.setItem("income", income);
 
-    transactions.push({
+    userTransactions.push({
         type: "Income",
         amount: amount,
         date: new Date().toLocaleString()
@@ -19,7 +19,7 @@ function addIncome(amount) {
 
     localStorage.setItem(
         "transactions",
-        JSON.stringify(transactions)
+        JSON.stringify(userTransactions)
     );
 
     updateDashboard();
@@ -32,7 +32,7 @@ function addExpense(amount) {
 
     localStorage.setItem("expenses", expenses);
 
-    transactions.push({
+    userTransactions.push({
         type: "Expense",
         amount: amount,
         date: new Date().toLocaleString()
@@ -40,11 +40,11 @@ function addExpense(amount) {
 
     localStorage.setItem(
         "transactions",
-        JSON.stringify(transactions)
+        JSON.stringify(userTransactions)
     );
 
     updateDashboard();
-    displayTransactions();
+    localStorage.setItem("transactions", ...)
 }
 
 

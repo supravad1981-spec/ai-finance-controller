@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Finance Controller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+        <div class="logo">AI Finance Controller</div>
+        <a href="#" class="nav-link">Dashboard</a>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <h1>Know where your money goes.</h1>
+        <p>
+            Track your income and expenses, understand your spending habits,
+            and get simple insights to manage your money better.
+        </p>
+    </section>
+
+   <section class="dashboard">
+
+    <div class="card">
+        <h3>Total Transactions</h3>
+        <div class="amount" id="totalTransactions">0</div>
+    </div>
+
+    <div class="card">
+        <h3>Matched</h3>
+        <div class="amount" id="matchedTransactions">0</div>
+    </div>
+
+    <div class="card">
+        <h3>Exceptions</h3>
+        <div class="amount" id="exceptionTransactions">0</div>
+    </div>
+
+    <div class="card">
+        <h3>Match Rate</h3>
+        <div class="amount" id="matchRate">0%</div>
+    </div>
+
+</section>
+
+    <section class="section">
+    <h2>Spending Overview</h2>
+
+    <div class="dashboard">
+
+        <div class="card">
+            <h3>Total Income</h3>
+            <div class="amount" id="income">₹0</div>
+        </div>
+
+        <div class="card">
+            <h3>Total Expenses</h3>
+            <div class="amount" id="expenses">₹0</div>
+        </div>
+
+        <div class="card">
+            <h3>Balance</h3>
+            <div class="amount" id="balance">₹0</div>
+        </div>
+
+    </div>
+
+<div id="spendingAnalysis">
+    <p>Spending analysis will appear here.</p>
+</div>
+
+</section>
+    <section class="section">
+    <h2>Add Transaction</h2>
+
+    <input
+        type="number"
+        id="amountInput"
+        placeholder="Enter amount"
+        min="0"
+    >
+
+    <button onclick="handleIncome()">Add Income</button>
+    <button onclick="handleExpense()">Add Expense</button>
+</section>
+
+    <section class="section">
+    <h2>Reconciliation Exceptions</h2>
+
+    <div id="exceptionsList">
+        <p>Checking transactions...</p>
+    </div>
+</section>
+
+    <section class="section">
+    <h2>Transaction History</h2>
+
+    <div id="transactionHistory">
+        <p>No transactions added yet.</p>
+    </div>
+</section>
+
+    <section class="section">
+    <h2>AI Insights</h2>
+
+    <div id="aiInsights">
+        <p>Add some transactions to get personalized financial insights.</p>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    AI Finance Controller · Built as a student project
+</footer>
+
+<script src="reconciliation.js?v=4"></script>
+<script src="script.js?v=5"></script>
+</body>
+</html>
